@@ -1,0 +1,13 @@
+C:\Users\Gaming\source\repos\DateApp\DateApp\bin\Debug\DateApp.exe.config
+C:\Users\Gaming\source\repos\DateApp\DateApp\bin\Debug\DateApp.exe
+C:\Users\Gaming\source\repos\DateApp\DateApp\bin\Debug\DateApp.pdb
+C:\Users\Gaming\source\repos\DateApp\DateApp\bin\Debug\Dapper.dll
+C:\Users\Gaming\source\repos\DateApp\DateApp\bin\Debug\Dapper.xml
+C:\Users\Gaming\source\repos\DateApp\DateApp\obj\Debug\DateApp.csprojAssemblyReference.cache
+C:\Users\Gaming\source\repos\DateApp\DateApp\obj\Debug\DateApp.Form1.resources
+C:\Users\Gaming\source\repos\DateApp\DateApp\obj\Debug\DateApp.Properties.Resources.resources
+C:\Users\Gaming\source\repos\DateApp\DateApp\obj\Debug\DateApp.csproj.GenerateResource.cache
+C:\Users\Gaming\source\repos\DateApp\DateApp\obj\Debug\DateApp.csproj.CoreCompileInputs.cache
+C:\Users\Gaming\source\repos\DateApp\DateApp\obj\Debug\DateApp.csproj.CopyComplete
+C:\Users\Gaming\source\repos\DateApp\DateApp\obj\Debug\DateApp.exe
+C:\Users\Gaming\source\repos\DateApp\DateApp\obj\Debug\DateApp.pdb
