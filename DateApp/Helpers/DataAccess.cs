@@ -40,16 +40,19 @@ namespace DateApp.Helpers
 
         public string InsertPeople(string[] values)
         {
+            // Create a list -> Lists can be indexed into. And i can not use a string easily*** I
             List<object> prof = new List<object>();
             List<object> area = new List<object>();
             List<object> status = new List<object>();
 
             using (IDbConnection con = new System.Data.SqlClient.SqlConnection(SqlHelper.ConVal("DateApp")))
             {
+                // Query for the ID of the foreign keys needed.
                 object oprof = con.Query($"SELECT profession.profID FROM profession WHERE prof = '{ values[5] }' ").FirstOrDefault();
                 object oarea = con.Query($"SELECT area.areaID FROM area WHERE postnumber = '{ values[6] }' ").FirstOrDefault();
                 object ostatus = con.Query($"SELECT status.statusID FROM status WHERE status = '{ values[7] }' ").FirstOrDefault();
 
+                // Get the value from the objects and put them in a list
                 prof = ((IDictionary<string, object>)oprof).Values.ToList();
                 area = ((IDictionary<string, object>)oarea).Values.ToList();
                 status = ((IDictionary<string, object>)ostatus).Values.ToList();
@@ -57,10 +60,12 @@ namespace DateApp.Helpers
 
             using (SqlConnection connection = new SqlConnection(SqlHelper.ConVal("DateApp")))
             {
+                // SQL INSERT query 
                 String query = "INSERT INTO dbo.person (firstName,lastName,mail,gender,birthday,profession,area,status,seeking) VALUES (@firstName,@lastName,@mail,@gender,@birthday,@profession,@area,@status,@seeking)";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
+                    // Add all the parameter values needed
                     command.Parameters.AddWithValue("@firstName", values[0]);
                     command.Parameters.AddWithValue("@lastName", values[1]);
                     command.Parameters.AddWithValue("@mail", values[2]);
@@ -71,12 +76,19 @@ namespace DateApp.Helpers
                     command.Parameters.AddWithValue("@status", status[0].ToString());
                     command.Parameters.AddWithValue("@seeking    ", values[8]);
 
+                    // Open connection
                     connection.Open();
-                    command.ExecuteNonQuery();
+                    // HANDLE THE LEVER KRONK!
+                    int result = command.ExecuteNonQuery();
+
+                    if (result == 0)
+                    {
+                        return "Somthing went wrong, no rows affected";
+                    }
                 }
             }
 
-            return "";
+            return "Success!";
         }
     }
 }

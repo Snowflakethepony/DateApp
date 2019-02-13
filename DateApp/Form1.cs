@@ -21,6 +21,7 @@ namespace DateApp
 
         private void buttonInsert_Click(object sender, EventArgs e)
         {
+            string result;
             string[] values =
                 {
                 firstnameBox.Text,
@@ -46,7 +47,10 @@ namespace DateApp
             }
 
             // Call to insert person
-            db.InsertPeople(values);
+            result = db.InsertPeople(values);
+
+            // Show result
+            MessageBox.Show(result, "New User");
         }
 
         private void buttonQueryMales_Click(object sender, EventArgs e)
