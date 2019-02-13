@@ -39,8 +39,6 @@
             this.lastnameBox = new System.Windows.Forms.TextBox();
             this.genderBox = new System.Windows.Forms.TextBox();
             this.birthdayBox = new System.Windows.Forms.TextBox();
-            this.profBox = new System.Windows.Forms.TextBox();
-            this.statusBox = new System.Windows.Forms.TextBox();
             this.buttonNewUser = new System.Windows.Forms.Button();
             this.buttonQueryMales = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -52,6 +50,8 @@
             this.mailBox = new System.Windows.Forms.TextBox();
             this.postNumberBox = new System.Windows.Forms.TextBox();
             this.seekingBox = new System.Windows.Forms.TextBox();
+            this.profBox = new System.Windows.Forms.ComboBox();
+            this.statusBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // buttonQueryFemales
@@ -146,20 +146,6 @@
             this.birthdayBox.Size = new System.Drawing.Size(100, 20);
             this.birthdayBox.TabIndex = 13;
             // 
-            // profBox
-            // 
-            this.profBox.Location = new System.Drawing.Point(544, 45);
-            this.profBox.Name = "profBox";
-            this.profBox.Size = new System.Drawing.Size(100, 20);
-            this.profBox.TabIndex = 15;
-            // 
-            // statusBox
-            // 
-            this.statusBox.Location = new System.Drawing.Point(756, 45);
-            this.statusBox.Name = "statusBox";
-            this.statusBox.Size = new System.Drawing.Size(100, 20);
-            this.statusBox.TabIndex = 16;
-            // 
             // buttonNewUser
             // 
             this.buttonNewUser.Location = new System.Drawing.Point(12, 72);
@@ -253,11 +239,29 @@
             this.seekingBox.Size = new System.Drawing.Size(100, 20);
             this.seekingBox.TabIndex = 27;
             // 
+            // profBox
+            // 
+            this.profBox.FormattingEnabled = true;
+            this.profBox.Location = new System.Drawing.Point(543, 45);
+            this.profBox.Name = "profBox";
+            this.profBox.Size = new System.Drawing.Size(100, 21);
+            this.profBox.TabIndex = 28;
+            // 
+            // statusBox
+            // 
+            this.statusBox.FormattingEnabled = true;
+            this.statusBox.Location = new System.Drawing.Point(757, 44);
+            this.statusBox.Name = "statusBox";
+            this.statusBox.Size = new System.Drawing.Size(99, 21);
+            this.statusBox.TabIndex = 29;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 450);
+            this.Controls.Add(this.statusBox);
+            this.Controls.Add(this.profBox);
             this.Controls.Add(this.seekingBox);
             this.Controls.Add(this.postNumberBox);
             this.Controls.Add(this.mailBox);
@@ -269,8 +273,6 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonQueryMales);
             this.Controls.Add(this.buttonNewUser);
-            this.Controls.Add(this.statusBox);
-            this.Controls.Add(this.profBox);
             this.Controls.Add(this.birthdayBox);
             this.Controls.Add(this.genderBox);
             this.Controls.Add(this.lastnameBox);
@@ -284,6 +286,7 @@
             this.Controls.Add(this.buttonQueryFemales);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -302,8 +305,6 @@
         private System.Windows.Forms.TextBox lastnameBox;
         private System.Windows.Forms.TextBox genderBox;
         private System.Windows.Forms.TextBox birthdayBox;
-        private System.Windows.Forms.TextBox profBox;
-        private System.Windows.Forms.TextBox statusBox;
         private System.Windows.Forms.Button buttonNewUser;
         private System.Windows.Forms.Button buttonQueryMales;
         private System.Windows.Forms.TextBox textBox1;
@@ -315,6 +316,8 @@
         private System.Windows.Forms.TextBox mailBox;
         private System.Windows.Forms.TextBox postNumberBox;
         private System.Windows.Forms.TextBox seekingBox;
+        private System.Windows.Forms.ComboBox profBox;
+        private System.Windows.Forms.ComboBox statusBox;
     }
 }
 
