@@ -61,7 +61,7 @@ namespace DateApp.Helpers
 
             using (SqlConnection connection = new SqlConnection(SqlHelper.ConVal("DateApp")))
             {
-                // SQL INSERT query 
+                // SQL INSERT query
                 String query = "INSERT INTO dbo.person (firstName,lastName,mail,gender,birthday,profession,area,status,seeking,picture) VALUES (@firstName,@lastName,@mail,@gender,@birthday,@profession,@area,@status,@seeking,@picture)";
 
                 using (SqlCommand command = new SqlCommand(query, connection))

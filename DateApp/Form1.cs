@@ -3,7 +3,6 @@ using DateApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 
 namespace DateApp
@@ -51,9 +50,9 @@ namespace DateApp
             openFileDialog1.Filter = "JPG files|*.jpg";
             openFileDialog1.Title = "Select a jpg image File";
 
-            // Show the Dialog.  
-            // If the user clicked OK in the dialog and  
-            // a .CUR file was selected, open it.  
+            // Show the Dialog.
+            // If the user clicked OK in the dialog and
+            // a .CUR file was selected, open it.
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string file = openFileDialog1.FileName;
@@ -70,7 +69,6 @@ namespace DateApp
             {
                 return;
             }
-            
         }
 
         private void buttonQueryMales_Click(object sender, EventArgs e)
@@ -129,9 +127,9 @@ namespace DateApp
             openFileDialog1.Filter = "JPG files|*.jpg";
             openFileDialog1.Title = "Select a jpg image File";
 
-            // Show the Dialog.  
-            // If the user clicked OK in the dialog and  
-            // a .CUR file was selected, open it.  
+            // Show the Dialog.
+            // If the user clicked OK in the dialog and
+            // a .CUR file was selected, open it.
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 profilePicture.Image = Image.FromFile(openFileDialog1.FileName);
