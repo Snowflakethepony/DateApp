@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 
 namespace DateApp.Helpers
@@ -38,7 +39,7 @@ namespace DateApp.Helpers
             return obj;*/
         }
 
-        public string InsertPeople(string[] values)
+        public string InsertPeople(string[] values, string fileName)
         {
             // Create a list -> Lists can be indexed into. And i can not use a string easily*** I
             List<object> prof = new List<object>();
@@ -61,10 +62,16 @@ namespace DateApp.Helpers
             using (SqlConnection connection = new SqlConnection(SqlHelper.ConVal("DateApp")))
             {
                 // SQL INSERT query 
-                String query = "INSERT INTO dbo.person (firstName,lastName,mail,gender,birthday,profession,area,status,seeking) VALUES (@firstName,@lastName,@mail,@gender,@birthday,@profession,@area,@status,@seeking)";
+                String query = "INSERT INTO dbo.person (firstName,lastName,mail,gender,birthday,profession,area,status,seeking,picture) VALUES (@firstName,@lastName,@mail,@gender,@birthday,@profession,@area,@status,@seeking,@picture)";
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
+                    FileInfo finfo = new FileInfo(fileName);
+                    byte[] btImage = new byte[finfo.Length];
+                    FileStream fStream = finfo.OpenRead();
+                    fStream.Read(btImage, 0, btImage.Length);
+                    fStream.Close();
+
                     // Add all the parameter values needed
                     command.Parameters.AddWithValue("@firstName", values[0]);
                     command.Parameters.AddWithValue("@lastName", values[1]);
@@ -75,6 +82,10 @@ namespace DateApp.Helpers
                     command.Parameters.AddWithValue("@area", area[0].ToString());
                     command.Parameters.AddWithValue("@status", status[0].ToString());
                     command.Parameters.AddWithValue("@seeking    ", values[8]);
+
+                    SqlParameter imageParameter = new SqlParameter("@picture", SqlDbType.Image);
+                    imageParameter.Value = btImage;
+                    command.Parameters.Add(imageParameter);
 
                     // Open connection
                     connection.Open();

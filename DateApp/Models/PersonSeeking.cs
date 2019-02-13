@@ -7,6 +7,7 @@
         public string city { get; set; }
         public string state { get; set; }
         public string seeking { get; set; }
+        public byte[] bitImage { get; set; }
 
         public string FullInfo
         {

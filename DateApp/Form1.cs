@@ -2,6 +2,8 @@
 using DateApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace DateApp
@@ -46,11 +48,29 @@ namespace DateApp
                 }
             }
 
-            // Call to insert person
-            result = db.InsertPeople(values);
+            openFileDialog1.Filter = "JPG files|*.jpg";
+            openFileDialog1.Title = "Select a jpg image File";
 
-            // Show result
-            MessageBox.Show(result, "New User");
+            // Show the Dialog.  
+            // If the user clicked OK in the dialog and  
+            // a .CUR file was selected, open it.  
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string file = openFileDialog1.FileName;
+
+                // Call to insert person
+                result = db.InsertPeople(values, file);
+
+                // Show result
+                MessageBox.Show(result, "New User");
+
+                profilePicture.Image = Image.FromFile(file);
+            }
+            else
+            {
+                return;
+            }
+            
         }
 
         private void buttonQueryMales_Click(object sender, EventArgs e)
@@ -101,6 +121,20 @@ namespace DateApp
             {
                 statusBox.Items.Add(((object[])((IDictionary<string, object>)status[ps]).Values)[0].ToString());
                 ps++;
+            }
+        }
+
+        private void buttonImage_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Filter = "JPG files|*.jpg";
+            openFileDialog1.Title = "Select a jpg image File";
+
+            // Show the Dialog.  
+            // If the user clicked OK in the dialog and  
+            // a .CUR file was selected, open it.  
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                profilePicture.Image = Image.FromFile(openFileDialog1.FileName);
             }
         }
     }

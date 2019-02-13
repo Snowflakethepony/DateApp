@@ -46,7 +46,8 @@ CREATE TABLE person
 	area INT FOREIGN KEY REFERENCES area(areaID),
 	profession INT FOREIGN KEY REFERENCES profession(profID),
 	status INT FOREIGN KEY REFERENCES status(statusID),
-	seeking CHAR(1) NOT NULL
+	seeking CHAR(1) NOT NULL,
+	picture IMAGE NULL
 )
 
 CREATE TABLE interests
