@@ -1,24 +1,18 @@
-﻿using DateApp.Models;
+﻿using DateApp.Helpers;
+using DateApp.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DateApp.Helpers;
 
 namespace DateApp
 {
     public partial class Form1 : Form
     {
-        List<Person> people = new List<Person>();
-        List<PersonSeeking> peopleSeeking = new List<PersonSeeking>();
+        private List<Person> people = new List<Person>();
+        private List<PersonSeeking> peopleSeeking = new List<PersonSeeking>();
 
-        DataAccess db = new DataAccess();
-        GUIHelper gh = new GUIHelper();
+        private DataAccess db = new DataAccess();
+        private GUIHelper gh = new GUIHelper();
 
         public Form1()
         {
@@ -27,9 +21,8 @@ namespace DateApp
 
         private void buttonInsert_Click(object sender, EventArgs e)
         {
-
-        string[] values =
-            {
+            string[] values =
+                {
                 firstnameBox.Text,
                 lastnameBox.Text,
                 mailBox.Text,
@@ -39,7 +32,6 @@ namespace DateApp
                 postNumberBox.Text,
                 statusBox.Text,
                 seekingBox.Text
-
             };
 
             // Make sure there is no null values
@@ -50,7 +42,7 @@ namespace DateApp
                     // Display message and return
                     MessageBox.Show("Hey there! You can not create a user with an empty field(s)", "HEY YOU!");
                     return;
-                }   
+                }
             }
 
             // Call to insert person
@@ -59,7 +51,6 @@ namespace DateApp
 
         private void buttonQueryMales_Click(object sender, EventArgs e)
         {
-
             // Query database
             peopleSeeking = db.GetPeople("DateApp",
                 "SELECT firstName, lastName, seeking, area.city, area.state FROM person " +
@@ -73,7 +64,7 @@ namespace DateApp
         private void buttonQueryFemales_Click(object sender, EventArgs e)
         {
             // Query database
-            peopleSeeking = db.GetPeople("DateApp", 
+            peopleSeeking = db.GetPeople("DateApp",
                 "SELECT firstName, lastName, seeking, area.city, area.state FROM person " +
                 "INNER JOIN area ON person.area = area.areaID " +
                 "WHERE gender = 'F'");
@@ -107,7 +98,6 @@ namespace DateApp
                 statusBox.Items.Add(((object[])((IDictionary<string, object>)status[ps]).Values)[0].ToString());
                 ps++;
             }
-
         }
     }
 }

@@ -20,12 +20,10 @@ namespace DateApp.Helpers
 
         public object[] GetValues(string name, string query)
         {
-
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(SqlHelper.ConVal(name)))
             {
                 return connection.Query<object>(query).ToArray();
             }
-
 
             /*
             object[] obj = null;
@@ -60,7 +58,7 @@ namespace DateApp.Helpers
             using (SqlConnection connection = new SqlConnection(SqlHelper.ConVal("DateApp")))
             {
                 String query = "INSERT INTO dbo.person (firstName,lastName,mail,gender,birthday,profession,area,status,seeking) VALUES (@firstName,@lastName,@mail,@gender,@birthday,@profession,@area,@status,@seeking)";
-                
+
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@firstName", values[0]);

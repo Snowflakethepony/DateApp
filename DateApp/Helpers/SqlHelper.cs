@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 
 namespace DateApp.Helpers
 {
@@ -13,6 +8,5 @@ namespace DateApp.Helpers
         {
             return ConfigurationManager.ConnectionStrings[name].ConnectionString;
         }
-        
     }
 }
