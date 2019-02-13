@@ -57,8 +57,10 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\DataAccess.cs" />
+    <Compile Include="Helpers\GUIHelper.cs" />
     <Compile Include="Helpers\SqlHelper.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\PersonSeeking.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

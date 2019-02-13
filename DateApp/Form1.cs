@@ -15,22 +15,69 @@ namespace DateApp
     public partial class Form1 : Form
     {
         List<Person> people = new List<Person>();
+        List<PersonSeeking> peopleSeeking = new List<PersonSeeking>();
+
+        DataAccess db = new DataAccess();
+        GUIHelper gh = new GUIHelper();
+
         public Form1()
         {
             InitializeComponent();
-
-            personBox.DataSource = people;
-            personBox.DisplayMember = "FullInfo";
         }
 
-        private void buttonQuery_Click(object sender, EventArgs e)
+        private void buttonInsert_Click(object sender, EventArgs e)
         {
-            DataAccess db = new DataAccess();
-            people = db.GetPeople("");
 
-            personBox.DataSource = people;
-            personBox.DisplayMember = "FullInfo";
-            personBox.Refresh();
+        string[] values =
+            {
+                firstnameBox.Text,
+                lastnameBox.Text,
+                mailBox.Text,
+                genderBox.Text,
+                birthdayBox.Text,
+                profBox.Text,
+                postNumberBox.Text,
+                statusBox.Text,
+                seekingBox.Text
+
+            };
+
+            foreach (string v in values)
+            {
+                if (v == "" || v == null)
+                {
+                    MessageBox.Show("Hey there! You can not create a user with an empty field(s)", "HEY YOU!");
+                }
+                else
+                {
+                    db.InsertPeople(values);
+                }
+            }
+        }
+
+        private void buttonQueryMales_Click(object sender, EventArgs e)
+        {
+
+            // Query database
+            peopleSeeking = db.GetPeople("DateApp",
+                "SELECT firstName, lastName, seeking, area.city, area.state FROM person " +
+                "INNER JOIN area ON person.area = area.areaID " +
+                "WHERE gender = 'M'");
+
+            // Call GUIHelper function to populate listview
+            gh.ListPeopleView(listViewPerson, peopleSeeking);
+        }
+
+        private void buttonQueryFemales_Click(object sender, EventArgs e)
+        {
+            // Query database
+            peopleSeeking = db.GetPeople("DateApp", 
+                "SELECT firstName, lastName, seeking, area.city, area.state FROM person " +
+                "INNER JOIN area ON person.area = area.areaID " +
+                "WHERE gender = 'F'");
+
+            // Call GUIHelper function to populate listview
+            gh.ListPeopleView(listViewPerson, peopleSeeking);
         }
     }
 }
