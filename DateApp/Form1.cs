@@ -60,10 +60,11 @@ namespace DateApp
                 // Call to insert person
                 result = db.InsertPeople(values, file);
 
+                // Show picture chosen
+                profilePicture.Image = Image.FromFile(file);
+
                 // Show result
                 MessageBox.Show(result, "New User");
-
-                profilePicture.Image = Image.FromFile(file);
             }
             else
             {
