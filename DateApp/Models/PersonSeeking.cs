@@ -2,18 +2,18 @@
 {
     public class PersonSeeking
     {
-        public string firstname { get; set; }
-        public string lastname { get; set; }
-        public string city { get; set; }
-        public string state { get; set; }
-        public string seeking { get; set; }
-        public byte[] bitImage { get; set; }
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Seeking { get; set; }
+        public byte[] BitImage { get; set; }
 
         public string FullInfo
         {
             get
             {
-                return $"{ firstname } { lastname } { city } { state }";
+                return $"{ Firstname } { Lastname } { City } { State }";
             }
         }
     }

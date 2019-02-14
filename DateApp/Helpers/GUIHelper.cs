@@ -20,13 +20,15 @@ namespace DateApp.Helpers
             foreach (PersonSeeking p in person)
             {
                 // Instasiate a new ListViewItem
-                ListViewItem item = new ListViewItem();
+                ListViewItem item = new ListViewItem
+                {
 
-                // Populate the item
-                item.Text = p.firstname + " " + p.lastname;
-                item.SubItems.Add(p.city);
-                item.SubItems.Add(p.state);
-                item.SubItems.Add(p.seeking);
+                    // Populate the item
+                    Text = p.Firstname + " " + p.Lastname
+                };
+                item.SubItems.Add(p.City);
+                item.SubItems.Add(p.State);
+                item.SubItems.Add(p.Seeking);
 
                 // Add the item to the ListView
                 list.Items.Add(item);

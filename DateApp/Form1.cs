@@ -96,7 +96,7 @@ namespace DateApp
             gh.ListPeopleView(listViewPerson, peopleSeeking);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void form1_Load(object sender, EventArgs e)
         {
             object[] prof = db.GetValues("DateApp", "SELECT prof FROM profession");
             object[] status = db.GetValues("DateApp", "SELECT status FROM status");

@@ -316,7 +316,7 @@
             this.Controls.Add(this.buttonQueryFemales);
             this.Name = "Form1";
             this.Text = "Date App V0.0.3";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.profilePicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

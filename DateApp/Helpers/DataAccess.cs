@@ -83,8 +83,10 @@ namespace DateApp.Helpers
                     command.Parameters.AddWithValue("@status", status[0].ToString());
                     command.Parameters.AddWithValue("@seeking    ", values[8]);
 
-                    SqlParameter imageParameter = new SqlParameter("@picture", SqlDbType.Image);
-                    imageParameter.Value = btImage;
+                    SqlParameter imageParameter = new SqlParameter("@picture", SqlDbType.Image)
+                    {
+                        Value = btImage
+                    };
                     command.Parameters.Add(imageParameter);
 
                     // Open connection
