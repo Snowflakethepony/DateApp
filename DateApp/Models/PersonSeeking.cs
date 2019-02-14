@@ -9,6 +9,9 @@
         public string Seeking { get; set; }
         public byte[] BitImage { get; set; }
 
+        /// <summary>
+        /// Outputs most relevant info.
+        /// </summary>
         public string FullInfo
         {
             get

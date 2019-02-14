@@ -20,6 +20,47 @@ namespace DateApp
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Happens doing loadtime.
+        /// Responsible for getting correct names for combo boxes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void form1_Load(object sender, EventArgs e)
+        {
+            object[] prof = db.GetValues("DateApp", "SELECT prof FROM profession");
+            object[] status = db.GetValues("DateApp", "SELECT status FROM status");
+
+            int px = 0;
+            int ps = 0;
+
+            // Old test code. THE LAST LINE WORKS TO GET INFO AND IS CURRENTLY IN USE!
+            //object test = obj[0];
+            //string test1 = ((Dapper.SqlMapper.DapperRow)obj[0]).values[0];
+            //var test11 = s[0][1];
+            //var s = obj.AsQueryable();
+            //var st = ((object[])((System.Collections.Generic.IDictionary<string, object>)obj[0]).Values)[0];
+
+            foreach (object p in prof)
+            {
+                profBox.Items.Add(((object[])((IDictionary<string, object>)prof[px]).Values)[0].ToString());
+                px++;
+            }
+            foreach (object s in status)
+            {
+                statusBox.Items.Add(((object[])((IDictionary<string, object>)status[ps]).Values)[0].ToString());
+                ps++;
+            }
+        }
+
+        #region Events
+
+        /// <summary>
+        /// Click handler for Inser button.
+        /// Extracts inputet data and call insert to DB.
+        /// </summary>
+        /// <param name="sender"> Button. </param>
+        /// <param name="e"> Event. </param>
         private void buttonInsert_Click(object sender, EventArgs e)
         {
             string result;
@@ -72,6 +113,12 @@ namespace DateApp
             }
         }
 
+        /// <summary>
+        /// Click handler for Query Males button.
+        /// Query and display in ListView.
+        /// </summary>
+        /// <param name="sender"> Button. </param>
+        /// <param name="e"> Event. </param>
         private void buttonQueryMales_Click(object sender, EventArgs e)
         {
             // Query database
@@ -84,6 +131,12 @@ namespace DateApp
             gh.ListPeopleView(listViewPerson, peopleSeeking);
         }
 
+        /// <summary>
+        /// Click handler for Query Females button.
+        /// Query and display in ListView.
+        /// </summary>
+        /// <param name="sender"> Button. </param>
+        /// <param name="e"> Event. </param>
         private void buttonQueryFemales_Click(object sender, EventArgs e)
         {
             // Query database
@@ -96,33 +149,12 @@ namespace DateApp
             gh.ListPeopleView(listViewPerson, peopleSeeking);
         }
 
-        private void form1_Load(object sender, EventArgs e)
-        {
-            object[] prof = db.GetValues("DateApp", "SELECT prof FROM profession");
-            object[] status = db.GetValues("DateApp", "SELECT status FROM status");
-
-            int px = 0;
-            int ps = 0;
-
-            // Old test code. THE LAST LINE WORKS TO GET INFO AND IS CURRENTLY IN USE!
-            //object test = obj[0];
-            //string test1 = ((Dapper.SqlMapper.DapperRow)obj[0]).values[0];
-            //var test11 = s[0][1];
-            //var s = obj.AsQueryable();
-            //var st = ((object[])((System.Collections.Generic.IDictionary<string, object>)obj[0]).Values)[0];
-
-            foreach (object p in prof)
-            {
-                profBox.Items.Add(((object[])((IDictionary<string, object>)prof[px]).Values)[0].ToString());
-                px++;
-            }
-            foreach (object s in status)
-            {
-                statusBox.Items.Add(((object[])((IDictionary<string, object>)status[ps]).Values)[0].ToString());
-                ps++;
-            }
-        }
-
+        /// <summary>
+        /// Click handler for image button.
+        /// Displays a chosen JPG file in pictureBox.
+        /// </summary>
+        /// <param name="sender"> Button. </param>
+        /// <param name="e"> Event. </param>
         private void buttonImage_Click(object sender, EventArgs e)
         {
             openFileDialog1.Filter = "JPG files|*.jpg";
@@ -136,5 +168,8 @@ namespace DateApp
                 profilePicture.Image = Image.FromFile(openFileDialog1.FileName);
             }
         }
+
+        #endregion
+
     }
 }

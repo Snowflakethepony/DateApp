@@ -13,6 +13,9 @@
         public string Status { get; set; }
         public string Seeking { get; set; }
 
+        /// <summary>
+        /// Outputs most relevant info.
+        /// </summary>
         public string FullInfo
         {
             get

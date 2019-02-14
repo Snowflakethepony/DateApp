@@ -11,6 +11,12 @@ namespace DateApp.Helpers
 {
     public class DataAccess
     {
+        /// <summary>
+        /// Query database with PersonSeeking Template.
+        /// </summary>
+        /// <param name="name"> Connectionstring. </param>
+        /// <param name="query"> FULL query text as string. </param>
+        /// <returns></returns>
         public List<PersonSeeking> GetPeople(string name, string query)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(SqlHelper.ConVal(name)))
@@ -19,6 +25,12 @@ namespace DateApp.Helpers
             }
         }
 
+        /// <summary>
+        /// "Normal" query on database that returns rows as objects.
+        /// </summary>
+        /// <param name="name"> Connectionstring. </param>
+        /// <param name="query"> FULL query text as string. </param>
+        /// <returns></returns>
         public object[] GetValues(string name, string query)
         {
             using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(SqlHelper.ConVal(name)))
@@ -39,6 +51,12 @@ namespace DateApp.Helpers
             return obj;*/
         }
 
+        /// <summary>
+        /// Insert row into people table. "New User".
+        /// </summary>
+        /// <param name="values"> All information in an array. </param>
+        /// <param name="fileName"> Image file name. </param>
+        /// <returns></returns>
         public string InsertPeople(string[] values, string fileName)
         {
             // Create a list -> Lists can be indexed into. And i can not use a string easily*** I

@@ -4,33 +4,41 @@ using System.Windows.Forms;
 
 namespace DateApp.Helpers
 {
+    /// <summary>
+    /// Class used as handle for the dynamic GUI changes.
+    /// </summary>
     public class GUIHelper
     {
+        /// <summary>
+        /// List people inside LiseView box.
+        /// </summary>
+        /// <param name="list"> ListView Control. </param>
+        /// <param name="person"> List of type PersonSeeking. </param>
         public void ListPeopleView(ListView list, List<PersonSeeking> person)
         {
-            // Clear list view
+            // Clear list view.
             list.Clear();
-            // Create the needed columns
+            // Create the needed columns.
             list.Columns.Add("Name", 150);
             list.Columns.Add("City", 100);
             list.Columns.Add("State", 100);
             list.Columns.Add("Seeks", 50);
 
-            // Goes though each of the person found and put them in the list as items
+            // Goes though each of the person found and put them in the list as items.
             foreach (PersonSeeking p in person)
             {
-                // Instasiate a new ListViewItem
+                // Instasiate a new ListViewItem.
                 ListViewItem item = new ListViewItem
                 {
 
-                    // Populate the item
+                    // Populate the item.
                     Text = p.Firstname + " " + p.Lastname
                 };
                 item.SubItems.Add(p.City);
                 item.SubItems.Add(p.State);
                 item.SubItems.Add(p.Seeking);
 
-                // Add the item to the ListView
+                // Add the item to the ListView.
                 list.Items.Add(item);
             }
         }
