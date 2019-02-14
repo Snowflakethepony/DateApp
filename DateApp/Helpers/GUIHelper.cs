@@ -1,9 +1,5 @@
 ﻿using DateApp.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DateApp.Helpers
@@ -12,7 +8,6 @@ namespace DateApp.Helpers
     {
         public void ListPeopleView(ListView list, List<PersonSeeking> person)
         {
-
             // Clear list view
             list.Clear();
             // Create the needed columns

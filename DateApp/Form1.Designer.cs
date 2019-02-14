@@ -39,8 +39,6 @@
             this.lastnameBox = new System.Windows.Forms.TextBox();
             this.genderBox = new System.Windows.Forms.TextBox();
             this.birthdayBox = new System.Windows.Forms.TextBox();
-            this.profBox = new System.Windows.Forms.TextBox();
-            this.statusBox = new System.Windows.Forms.TextBox();
             this.buttonNewUser = new System.Windows.Forms.Button();
             this.buttonQueryMales = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -52,6 +50,12 @@
             this.mailBox = new System.Windows.Forms.TextBox();
             this.postNumberBox = new System.Windows.Forms.TextBox();
             this.seekingBox = new System.Windows.Forms.TextBox();
+            this.profBox = new System.Windows.Forms.ComboBox();
+            this.statusBox = new System.Windows.Forms.ComboBox();
+            this.buttonImage = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.profilePicture = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.profilePicture)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonQueryFemales
@@ -146,20 +150,6 @@
             this.birthdayBox.Size = new System.Drawing.Size(100, 20);
             this.birthdayBox.TabIndex = 13;
             // 
-            // profBox
-            // 
-            this.profBox.Location = new System.Drawing.Point(544, 45);
-            this.profBox.Name = "profBox";
-            this.profBox.Size = new System.Drawing.Size(100, 20);
-            this.profBox.TabIndex = 15;
-            // 
-            // statusBox
-            // 
-            this.statusBox.Location = new System.Drawing.Point(756, 45);
-            this.statusBox.Name = "statusBox";
-            this.statusBox.Size = new System.Drawing.Size(100, 20);
-            this.statusBox.TabIndex = 16;
-            // 
             // buttonNewUser
             // 
             this.buttonNewUser.Location = new System.Drawing.Point(12, 72);
@@ -253,11 +243,55 @@
             this.seekingBox.Size = new System.Drawing.Size(100, 20);
             this.seekingBox.TabIndex = 27;
             // 
+            // profBox
+            // 
+            this.profBox.FormattingEnabled = true;
+            this.profBox.Location = new System.Drawing.Point(543, 45);
+            this.profBox.Name = "profBox";
+            this.profBox.Size = new System.Drawing.Size(100, 21);
+            this.profBox.TabIndex = 28;
+            // 
+            // statusBox
+            // 
+            this.statusBox.FormattingEnabled = true;
+            this.statusBox.Location = new System.Drawing.Point(757, 44);
+            this.statusBox.Name = "statusBox";
+            this.statusBox.Size = new System.Drawing.Size(99, 21);
+            this.statusBox.TabIndex = 29;
+            // 
+            // buttonImage
+            // 
+            this.buttonImage.Location = new System.Drawing.Point(887, 81);
+            this.buttonImage.Name = "buttonImage";
+            this.buttonImage.Size = new System.Drawing.Size(75, 23);
+            this.buttonImage.TabIndex = 30;
+            this.buttonImage.Text = "Image";
+            this.buttonImage.UseVisualStyleBackColor = true;
+            this.buttonImage.Click += new System.EventHandler(this.buttonImage_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.InitialDirectory = "C:\\";
+            // 
+            // profilePicture
+            // 
+            this.profilePicture.Location = new System.Drawing.Point(794, 213);
+            this.profilePicture.Name = "profilePicture";
+            this.profilePicture.Size = new System.Drawing.Size(222, 225);
+            this.profilePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.profilePicture.TabIndex = 31;
+            this.profilePicture.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 450);
+            this.Controls.Add(this.profilePicture);
+            this.Controls.Add(this.buttonImage);
+            this.Controls.Add(this.statusBox);
+            this.Controls.Add(this.profBox);
             this.Controls.Add(this.seekingBox);
             this.Controls.Add(this.postNumberBox);
             this.Controls.Add(this.mailBox);
@@ -269,8 +303,6 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.buttonQueryMales);
             this.Controls.Add(this.buttonNewUser);
-            this.Controls.Add(this.statusBox);
-            this.Controls.Add(this.profBox);
             this.Controls.Add(this.birthdayBox);
             this.Controls.Add(this.genderBox);
             this.Controls.Add(this.lastnameBox);
@@ -283,7 +315,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonQueryFemales);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Date App V0.0.3";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.profilePicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -302,8 +336,6 @@
         private System.Windows.Forms.TextBox lastnameBox;
         private System.Windows.Forms.TextBox genderBox;
         private System.Windows.Forms.TextBox birthdayBox;
-        private System.Windows.Forms.TextBox profBox;
-        private System.Windows.Forms.TextBox statusBox;
         private System.Windows.Forms.Button buttonNewUser;
         private System.Windows.Forms.Button buttonQueryMales;
         private System.Windows.Forms.TextBox textBox1;
@@ -315,6 +347,11 @@
         private System.Windows.Forms.TextBox mailBox;
         private System.Windows.Forms.TextBox postNumberBox;
         private System.Windows.Forms.TextBox seekingBox;
+        private System.Windows.Forms.ComboBox profBox;
+        private System.Windows.Forms.ComboBox statusBox;
+        private System.Windows.Forms.Button buttonImage;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.PictureBox profilePicture;
     }
 }
 

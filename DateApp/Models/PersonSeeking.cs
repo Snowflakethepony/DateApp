@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DateApp.Models
+﻿namespace DateApp.Models
 {
     public class PersonSeeking
     {
@@ -13,6 +7,7 @@ namespace DateApp.Models
         public string city { get; set; }
         public string state { get; set; }
         public string seeking { get; set; }
+        public byte[] bitImage { get; set; }
 
         public string FullInfo
         {
@@ -20,7 +15,6 @@ namespace DateApp.Models
             {
                 return $"{ firstname } { lastname } { city } { state }";
             }
-
         }
     }
 }
