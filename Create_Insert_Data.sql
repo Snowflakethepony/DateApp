@@ -16,8 +16,8 @@ GO
 -- Create the tables
 CREATE TABLE profession
 (
-	profID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
-	prof NVARCHAR(60) NOT NULL
+	profID int NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	prof NVARCHAR(60) NOT NULL 
 )
 
 CREATE TABLE status 
@@ -28,10 +28,9 @@ CREATE TABLE status
 
 CREATE TABLE area
 (
-	areaID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	postnumber INT NOT NULL PRIMARY KEY,
 	city NVARCHAR(60) NOT NULL,
 	state NVARCHAR(45) NOT NULL,
-	postnumber INT NOT NULL
 )
 
 CREATE TABLE person
@@ -43,9 +42,9 @@ CREATE TABLE person
 	gender CHAR(1) NOT NULL,
 	mail NVARCHAR(60) NOT NULL,
 	phone INT NULL,
-	area INT FOREIGN KEY REFERENCES area(areaID),
-	profession INT FOREIGN KEY REFERENCES profession(profID),
-	status INT FOREIGN KEY REFERENCES status(statusID),
+	area INT FOREIGN KEY REFERENCES area(postnumber),
+	profession NVARCHAR(60) FOREIGN KEY REFERENCES profession(prof),
+	status NVARCHAR(25) FOREIGN KEY REFERENCES status(status),
 	seeking CHAR(1) NOT NULL,
 	picture IMAGE NULL
 )
@@ -111,17 +110,17 @@ VALUES
 
 INSERT INTO area
 VALUES
-('Svenstrup J', 'Nordjylland', 9230),
-('Aalborg', 'Nordjylland', 9000),
-('Aarhus N', 'Midjylland', 8200),
-('København S', 'Sjælland', 2300)
+(9230, 'Svenstrup J', 'Nordjylland'),
+(9000, 'Aalborg', 'Nordjylland'),
+(8200, 'Aarhus N', 'Midjylland'),
+(2300, 'København S', 'Sjælland')
 
 INSERT INTO person
 (firstName, lastName, birthday, gender, mail, phone, area, status, profession, seeking)
 VALUES
-('Peter', 'Pan', '1996-02-04', 'M', 'PP@test.dk', 10101010, 1, 1, 1, 'F'),
-('Henirk', 'Lauridsen', '1994-05-12', 'M' ,'HL@test.dk', 20202020, 2, 1, 3, 'F'),
-('Matilde', 'Kristensen', '1994-02-20', 'F', 'MK@test.dk', 30303030, 1, 1, 2, 'M')
+('Peter', 'Pan', '1996-02-04', 'M', 'PP@test.dk', 10101010, 9230, 'Single', 'Student', 'F'),
+('Henirk', 'Lauridsen', '1994-05-12', 'M' ,'HL@test.dk', 20202020, 8200, 'Single', 'Student', 'F'),
+('Matilde', 'Kristensen', '1994-02-20', 'F', 'MK@test.dk', 30303030, 9000, 'Single', 'Student', 'M')
 
 INSERT INTO interests
 VALUES

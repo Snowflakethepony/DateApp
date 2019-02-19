@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace DateApp
 {
-    public partial class Form1 : Form
+    public partial class DateAppForm : Form
     {
         private List<Person> people = new List<Person>();
         private List<PersonSeeking> peopleSeeking = new List<PersonSeeking>();
@@ -15,7 +15,7 @@ namespace DateApp
         private DataAccess db = new DataAccess();
         private GUIHelper gh = new GUIHelper();
 
-        public Form1()
+        public DateAppForm()
         {
             InitializeComponent();
         }
@@ -53,7 +53,7 @@ namespace DateApp
             }
         }
 
-        #region Events
+        #region UserInteractions
 
         /// <summary>
         /// Click handler for Inser button.

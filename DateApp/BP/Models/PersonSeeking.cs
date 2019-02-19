@@ -1,17 +1,13 @@
 ﻿namespace DateApp.Models
 {
-    /// <summary>
-    /// Speciality class used to query for specific information/ special information
-    /// INCLUDES OTHER TABLE VALUES.
-    /// </summary>
     public class PersonSeeking
     {
         public string Firstname { get; set; }
         public string Lastname { get; set; }
-        public string Mail { get; set; }
-        public string Seeking { get; set; }
-        public byte[] Picture { get; set; }
         public string City { get; set; }
+        public string State { get; set; }
+        public string Seeking { get; set; }
+        public byte[] BitImage { get; set; }
 
         /// <summary>
         /// Outputs most relevant info.
@@ -20,7 +16,7 @@
         {
             get
             {
-                return $"{ Firstname } { Lastname } { City }";
+                return $"{ Firstname } { Lastname } { City } { State }";
             }
         }
     }

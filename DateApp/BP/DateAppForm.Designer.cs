@@ -1,6 +1,6 @@
 ﻿namespace DateApp
 {
-    partial class Form1
+    partial class DateAppForm
     {
         /// <summary>
         /// Required designer variable.
