@@ -21,7 +21,7 @@ namespace DateApp.Helpers
         {
             using (IDbConnection connection = new SqlConnection(SqlHelper.ConVal(name)))
             {
-                 return connection.Query<Person>(query).ToList();
+                return connection.Query<Person>(query).ToList();
             }
         }
 
@@ -56,7 +56,6 @@ namespace DateApp.Helpers
                 // Add the new person to the list.
                 personS.Add(ps);
             }
-
 
             return personS;
         }
@@ -164,7 +163,7 @@ namespace DateApp.Helpers
         }
 
         /// <summary>
-        /// Same as old one besides this used another class. 
+        /// Same as old one besides this used another class.
         /// Makes it slitgly lighter.
         /// </summary>
         /// <param name="values"></param>
@@ -294,7 +293,8 @@ namespace DateApp.Helpers
                     {
                         outResult = "Somthing went wrong, no rows affected";
                     }
-                    else if (Convert.ToString(result) != ""){
+                    else if (Convert.ToString(result) != "")
+                    {
                         outResult = "Success";
                     }
                 }

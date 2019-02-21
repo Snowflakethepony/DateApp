@@ -10,7 +10,7 @@
         public string Mail { get; set; }
         public int Phone { get; set; }
         public int Area { get; set; }
-        public string Profession { get; set; }   
+        public string Profession { get; set; }
         public string Status { get; set; }
         public string Seeking { get; set; }
         public byte[] Picture { get; set; }

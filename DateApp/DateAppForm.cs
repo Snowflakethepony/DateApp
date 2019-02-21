@@ -10,12 +10,17 @@ namespace DateApp
 {
     public partial class DateAppForm : Form
     {
+        // Instansiate local variables.
         private List<Person> people = new List<Person>();
+
         private List<PersonSeeking> peopleSeeking = new List<PersonSeeking>();
 
+        // Instansiate Helper classes.
         private DataAccess db = new DataAccess();
+
         private GUIHelper gh = new GUIHelper();
 
+        // Open the app.
         public DateAppForm()
         {
             InitializeComponent();
@@ -25,8 +30,6 @@ namespace DateApp
         /// Happens doing loadtime.
         /// Responsible for getting correct names for combo boxes.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void DateAppFormLoad(object sender, EventArgs e)
         {
             object[] prof = db.GetValues("DateApp", "SELECT prof FROM profession");
@@ -49,7 +52,7 @@ namespace DateApp
             foreach (object p in prof)
             {
                 profBox.Items.Add(((object[])((IDictionary<string, object>)prof[px]).Values)[0].ToString());
-                
+
                 px++;
             }
             foreach (object s in status)
@@ -71,7 +74,6 @@ namespace DateApp
         {
             Person person = new Person();
             string[] controlNames = { profBox.Text, statusBox.Text };
-            
 
             try
             {
@@ -117,7 +119,6 @@ namespace DateApp
             }
             catch
             {
-
             }
             /* OLD
             string result;
@@ -217,7 +218,7 @@ namespace DateApp
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -228,7 +229,6 @@ namespace DateApp
             string[] columns = { "Name:150", "City:100", "Mail:100", "Seeks:50", ":0" };
 
             int testInput;
-
 
             try
             {
@@ -277,9 +277,14 @@ namespace DateApp
             }
         }
 
+        #endregion UserInteractions
 
-        #endregion
+        #region Internal
 
+        /// <summary>
+        /// Show a byteArray image on the GUI control.
+        /// </summary>
+        /// <param name="picture"> Bytearray of the image. </param>
         private void showProfilePicture(byte[] picture)
         {
             try
@@ -306,26 +311,30 @@ namespace DateApp
             {
                 using (var ms = new MemoryStream(byteArray))
                 {
-                    image  = Image.FromStream(ms);
+                    image = Image.FromStream(ms);
                 }
             }
             catch
             {
-
             }
 
             return image;
         }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void itemShowPicture(object sender, ListViewItemMouseHoverEventArgs e)
         {
-
             var test = e.Item.SubItems.GetEnumerator();
-            
-            
+
             Console.WriteLine(test.Current);
             test.MoveNext();
             Console.WriteLine(test);
         }
+
+        #endregion Internal
     }
 }

@@ -34,7 +34,6 @@ namespace DateApp.Helpers
                 // Instasiate a new ListViewItem.
                 ListViewItem item = new ListViewItem
                 {
-
                     // Populate the item.
                     Text = p.Firstname + " " + p.Lastname
                 };
@@ -54,7 +53,6 @@ namespace DateApp.Helpers
                 }
                 catch
                 {
-
                 }
 
                 // Add the item to the ListView.
@@ -77,7 +75,6 @@ namespace DateApp.Helpers
                 // Instasiate a new ListViewItem.
                 ListViewItem item = new ListViewItem
                 {
-
                     // Populate the item.
                     Text = p.Firstname + " " + p.Lastname
                 };
