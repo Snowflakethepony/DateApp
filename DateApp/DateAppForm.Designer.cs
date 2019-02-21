@@ -83,7 +83,7 @@
             this.firstnameBox.Location = new System.Drawing.Point(12, 45);
             this.firstnameBox.Name = "firstnameBox";
             this.firstnameBox.Size = new System.Drawing.Size(100, 20);
-            this.firstnameBox.TabIndex = 2;
+            this.firstnameBox.TabIndex = 1;
             // 
             // label2
             // 
@@ -135,14 +135,14 @@
             this.lastnameBox.Location = new System.Drawing.Point(118, 45);
             this.lastnameBox.Name = "lastnameBox";
             this.lastnameBox.Size = new System.Drawing.Size(100, 20);
-            this.lastnameBox.TabIndex = 10;
+            this.lastnameBox.TabIndex = 2;
             // 
             // birthdayBox
             // 
             this.birthdayBox.Location = new System.Drawing.Point(437, 45);
             this.birthdayBox.Name = "birthdayBox";
             this.birthdayBox.Size = new System.Drawing.Size(100, 20);
-            this.birthdayBox.TabIndex = 13;
+            this.birthdayBox.TabIndex = 5;
             // 
             // buttonNewUser
             // 
@@ -222,14 +222,14 @@
             this.mailBox.Location = new System.Drawing.Point(224, 45);
             this.mailBox.Name = "mailBox";
             this.mailBox.Size = new System.Drawing.Size(100, 20);
-            this.mailBox.TabIndex = 25;
+            this.mailBox.TabIndex = 3;
             // 
             // postNumberBox
             // 
             this.postNumberBox.Location = new System.Drawing.Point(650, 45);
             this.postNumberBox.Name = "postNumberBox";
             this.postNumberBox.Size = new System.Drawing.Size(100, 20);
-            this.postNumberBox.TabIndex = 26;
+            this.postNumberBox.TabIndex = 7;
             // 
             // profBox
             // 
@@ -237,7 +237,7 @@
             this.profBox.Location = new System.Drawing.Point(543, 45);
             this.profBox.Name = "profBox";
             this.profBox.Size = new System.Drawing.Size(100, 21);
-            this.profBox.TabIndex = 28;
+            this.profBox.TabIndex = 6;
             // 
             // statusBox
             // 
@@ -245,7 +245,7 @@
             this.statusBox.Location = new System.Drawing.Point(757, 44);
             this.statusBox.Name = "statusBox";
             this.statusBox.Size = new System.Drawing.Size(99, 21);
-            this.statusBox.TabIndex = 29;
+            this.statusBox.TabIndex = 8;
             // 
             // buttonImage
             // 
@@ -290,7 +290,7 @@
             this.genderBox.Location = new System.Drawing.Point(330, 45);
             this.genderBox.Name = "genderBox";
             this.genderBox.Size = new System.Drawing.Size(100, 21);
-            this.genderBox.TabIndex = 33;
+            this.genderBox.TabIndex = 4;
             // 
             // seekingBox
             // 
@@ -302,7 +302,7 @@
             this.seekingBox.Location = new System.Drawing.Point(862, 44);
             this.seekingBox.Name = "seekingBox";
             this.seekingBox.Size = new System.Drawing.Size(100, 21);
-            this.seekingBox.TabIndex = 34;
+            this.seekingBox.TabIndex = 9;
             // 
             // DateAppForm
             // 

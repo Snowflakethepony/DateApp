@@ -94,6 +94,36 @@ namespace DateApp.Helpers
         }
 
         /// <summary>
+        /// "Translate" visual text into Database IDs for foreign keys.
+        /// </summary>
+        /// <param name="p"> Input the names. (Most from GUI control texts). </param>
+        /// <returns> A list containing profID and statusID in that order. </returns>
+        public List<object> Translator2(string[] p)
+        {
+            // Create the output list.
+            List<object> outPut = new List<object>();
+
+            using (IDbConnection con = new SqlConnection(SqlHelper.ConVal("DateApp")))
+            {
+                // Query for the information of the foreign keys needed.
+                object oprof = con.Query($"SELECT profession.profID FROM profession WHERE prof = '{ p[0] }' ").FirstOrDefault();
+                object ostatus = con.Query($"SELECT status.statusID FROM status WHERE status = '{ p[1] }' ").FirstOrDefault();
+
+                // Get the value from the objects and put them in a list - OLD NOT USED! CANNOT BE INDEXED INTO.
+                //outPut.Add(((IDictionary<string, object>)oprof).Values.ToList());
+                //outPut.Add(((IDictionary<string, object>)ocity).Values.ToList());
+                //outPut.Add(((IDictionary<string, object>)ostatus).Values.ToList());
+
+                // NEW SOLVED THE INDEXING ISSUE
+                //var test = ((object[])((System.Collections.Generic.IDictionary<string, object>)oprof).Values)[0];
+                outPut.Add(((object[])((IDictionary<string, object>)oprof).Values)[0]);
+                outPut.Add(((object[])((IDictionary<string, object>)ostatus).Values)[0]);
+            }
+
+            return outPut;
+        }
+
+        /// <summary>
         /// Query directly into personseeking via stored procedure.
         /// Does not take in a query as this is a static query!.
         /// </summary>

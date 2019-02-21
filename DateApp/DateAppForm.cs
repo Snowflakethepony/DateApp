@@ -70,7 +70,55 @@ namespace DateApp
         private void buttonInsert_Click(object sender, EventArgs e)
         {
             Person person = new Person();
+            string[] controlNames = { profBox.Text, statusBox.Text };
+            
 
+            try
+            {
+                openFileDialog1.Filter = "JPG files|*.jpg";
+                openFileDialog1.Title = "Select a jpg image File";
+                List<object> pobjs = db.Translator2(controlNames);
+
+                // Show the Dialog.
+                // If the user clicked OK in the dialog and
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    FileInfo finfo = new FileInfo(openFileDialog1.FileName);
+                    byte[] btImage = new byte[finfo.Length];
+                    FileStream fStream = finfo.OpenRead();
+                    fStream.Read(btImage, 0, btImage.Length);
+                    fStream.Close();
+
+                    person.Firstname = firstnameBox.Text;
+                    person.Lastname = lastnameBox.Text;
+                    person.Mail = mailBox.Text;
+                    person.Gender = Convert.ToChar(genderBox.Text);
+                    person.Birthday = birthdayBox.Text;
+                    person.Profession = pobjs[0].ToString();
+                    person.Area = Convert.ToInt16(postNumberBox.Text);
+                    person.Status = pobjs[1].ToString();
+                    person.Seeking = seekingBox.Text;
+                    person.Picture = btImage;
+
+                    // Call to insert person
+                    //db.InsertPeople(values, file);
+                    db.InsertPeple(person);
+
+                    // Show picture chosen
+                    profilePicture.Image = Image.FromFile(openFileDialog1.FileName);
+
+                    // Show result
+                    //MessageBox.Show(result, "New User");
+                }
+                else
+                {
+                    return;
+                }
+            }
+            catch
+            {
+
+            }
             /* OLD
             string result;
             string[] values =
@@ -96,45 +144,6 @@ namespace DateApp
                     return;
                 }
             }*/
-
-            openFileDialog1.Filter = "JPG files|*.jpg";
-            openFileDialog1.Title = "Select a jpg image File";
-
-            // Show the Dialog.
-            // If the user clicked OK in the dialog and
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                FileInfo finfo = new FileInfo(openFileDialog1.FileName);
-                byte[] btImage = new byte[finfo.Length];
-                FileStream fStream = finfo.OpenRead();
-                fStream.Read(btImage, 0, btImage.Length);
-                fStream.Close();
-
-                person.Firstname = firstnameBox.Text;
-                person.Lastname = lastnameBox.Text;
-                person.Mail = mailBox.Text;
-                person.Gender = Convert.ToChar(genderBox.Text);
-                person.Birthday = birthdayBox.Text;
-                person.Profession = profBox.Text;
-                person.Area = Convert.ToInt16(postNumberBox.Text);
-                person.Status = statusBox.Text;
-                person.Seeking = seekingBox.Text;
-                person.Picture = btImage;
-
-                // Call to insert person
-                //db.InsertPeople(values, file);
-                db.InsertPeple(person);
-
-                // Show picture chosen
-                profilePicture.Image = Image.FromFile(openFileDialog1.FileName);
-
-                // Show result
-                //MessageBox.Show(result, "New User");
-            }
-            else
-            {
-                return;
-            }
         }
 
         /// <summary>
@@ -152,11 +161,14 @@ namespace DateApp
                 "INNER JOIN area ON person.area = area.areaID " +
                 "WHERE gender = 'M'");*/
 
+            // Columns - EMpty for picture
+            string[] columns = { "Name:150", "City:100", "Mail:100", "Seeks:50", ":0" };
+
             // Query database using stored procedure method.
             peopleSeeking = db.GetPersonSeeking("DateApp", "M");
 
             // Call GUIHelper function to populate listview
-            gh.ListPeopleView(listViewPerson, peopleSeeking);
+            gh.ListPeopleView(listViewPerson, peopleSeeking, columns);
         }
 
         /// <summary>
@@ -174,11 +186,14 @@ namespace DateApp
                 "INNER JOIN area ON person.area = area.areaID " +
                 "WHERE gender = 'F'");*/
 
+            // Columns - Empty for picture
+            string[] columns = { "Name:150", "City:100", "Mail:100", "Seeks:50", ":0" };
+
             // Query database using stored procedure method.
             peopleSeeking = db.GetPersonSeeking("DateApp", "F");
 
             // Call GUIHelper function to populate listview
-            gh.ListPeopleView(listViewPerson, peopleSeeking);
+            gh.ListPeopleView(listViewPerson, peopleSeeking, columns);
         }
 
         /// <summary>
@@ -209,33 +224,52 @@ namespace DateApp
         private void buttonQuery_Click(object sender, EventArgs e)
         {
             string box = nameIDBox.Text;
-            int test;
+            // Columns - Empty for picture
+            string[] columns = { "Name:150", "City:100", "Mail:100", "Seeks:50", ":0" };
+
+            int testInput;
+
 
             try
             {
-                test = Convert.ToInt32(box);
+                testInput = Convert.ToInt32(box);
             }
             catch
             {
-                test = -1;
+                testInput = -1;
             }
 
             if (box != "" && box != null)
             {
-                // If the test int is higher then -1 (correct id) then an id is provided.
-                if (test >= 0)
-                {
-                    // Query by ID
-                    peopleSeeking = db.GetPersonSeeking2("DateApp", $"SELECT * FROM person WHERE personID = '{test}'");
-                }
-                // Else a name is provided.
-                else
+                // If contain "-" then birthday is provided.
+                if (box.Contains("-"))
                 {
                     // Query by birthday
                     peopleSeeking = db.GetPersonSeeking2("DateApp", $"SELECT * FROM person WHERE birthday like '{box}%'");
                 }
+                // If the test int is higher then -1 (correct id) then an id is provided.
+                else if (testInput >= 0)
+                {
+                    // Query ID - And call display image.
+                    peopleSeeking = db.GetPersonSeeking2("DateApp", $"SELECT * FROM person WHERE personID = '{box}'");
 
-                gh.ListPeopleView(listViewPerson, peopleSeeking);
+                    // Instaziate a new person to extract profile picture.
+                    PersonSeeking person = peopleSeeking[0];
+
+                    // Only call show picture code if there is an image.
+                    if (person.Picture != null)
+                    {
+                        // Call the function to show the profile picture.
+                        showProfilePicture(person.Picture);
+                    }
+                }
+                // Name most be provided.
+                else
+                {
+                    peopleSeeking = db.GetPersonSeeking2("DateApp", $"SELECT * FROM person WHERE person.firstName like '{box}%'");
+                }
+
+                gh.ListPeopleView(listViewPerson, peopleSeeking, columns);
             }
             else
             {
@@ -246,9 +280,52 @@ namespace DateApp
 
         #endregion
 
+        private void showProfilePicture(byte[] picture)
+        {
+            try
+            {
+                Image i = byteArrayToImage(picture);
+
+                profilePicture.Image = i;
+            }
+            catch
+            {
+                // Handle it KRONK
+            }
+        }
+
+        /// <summary>
+        /// Convert a bytearray to an Image type.
+        /// </summary>
+        /// <param name="byteArray"> Bytearray to convert. </param>
+        /// <returns> The converted image. </returns>
+        private Image byteArrayToImage(byte[] byteArray)
+        {
+            Image image = null;
+            try
+            {
+                using (var ms = new MemoryStream(byteArray))
+                {
+                    image  = Image.FromStream(ms);
+                }
+            }
+            catch
+            {
+
+            }
+
+            return image;
+        }
+
         private void itemShowPicture(object sender, ListViewItemMouseHoverEventArgs e)
         {
 
+            var test = e.Item.SubItems.GetEnumerator();
+            
+            
+            Console.WriteLine(test.Current);
+            test.MoveNext();
+            Console.WriteLine(test);
         }
     }
 }

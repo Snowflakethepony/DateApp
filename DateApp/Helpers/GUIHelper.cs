@@ -15,15 +15,18 @@ namespace DateApp.Helpers
         /// </summary>
         /// <param name="list"> ListView Control. </param>
         /// <param name="person"> List of type PersonSeeking. </param>
-        public void ListPeopleView(ListView list, List<PersonSeeking> person)
+        /// <param name="columns"> Array containing column names and width format like this: "NameOfColumn:WidthInPixels". </param>
+        public void ListPeopleView(ListView list, List<PersonSeeking> person, string[] columns)
         {
             // Clear list view.
             list.Clear();
-            // Create the needed columns.
-            list.Columns.Add("Name", 150);
-            list.Columns.Add("City", 100);
-            list.Columns.Add("Mail", 100);
-            list.Columns.Add("Seeks", 50);
+            string[] t;
+
+            foreach (string v in columns)
+            {
+                t = v.Split(':');
+                list.Columns.Add(t[0], Convert.ToInt16(t[1]));
+            }
 
             // Goes though each of the person found and put them in the list as items.
             foreach (PersonSeeking p in person)
@@ -38,6 +41,21 @@ namespace DateApp.Helpers
                 item.SubItems.Add(p.City);
                 item.SubItems.Add(p.Mail);
                 item.SubItems.Add(p.Seeking);
+                try
+                {
+                    if (p.Picture != null)
+                    {
+                        item.SubItems.Add(p.Picture.ToString());
+                    }
+                    else
+                    {
+                        item.SubItems.Add("No Picture");
+                    }
+                }
+                catch
+                {
+
+                }
 
                 // Add the item to the ListView.
                 list.Items.Add(item);
