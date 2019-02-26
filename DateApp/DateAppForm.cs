@@ -240,6 +240,60 @@ namespace DateApp
         /// <param name="e"></param>
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
+            // Check if more than one listitem is selected.
+            // Open and populate the update form with item information.
+            // If update button is clicked then run updatePerson method.
+
+            ListViewItem i;
+            PersonSeeking person;
+
+            if (listViewPerson.SelectedItems.Count == 1)
+            {
+                // Index 0 for the first and ONLY item.
+                i = listViewPerson.SelectedItems[0];
+                // Gets the object inside peopleSeeking collection with the corresponding personID.
+                person = peopleSeeking.Find(p => p.PersonID == Convert.ToInt16(i.Text));
+
+                // Populate the update forms control text.
+                f2.firstnameBox.Text = person.Firstname;
+                f2.lastnameBox.Text = person.Lastname;
+                f2.mailBox.Text = person.Mail;
+                f2.seekingBox.Text = person.Seeking;
+
+                // Open the form -> wait for close.
+                f2.ShowForm(this);
+
+                // If the update button event happened then update the user.
+                if (f2.updateClicked)
+                {
+                    // Translate the user friendly names into correct SQL foreign key names
+                    string[] controlNames = { f2.profBox.Text, f2.statusBox.Text };
+                    List<object> pobjs = db.Translator2(controlNames);
+
+                    Person updatePerson = new Person(
+                        person.PersonID,
+                        f2.firstnameBox.Text,
+                        f2.lastnameBox.Text,
+                        f2.birthdayBox.Text,
+                        Convert.ToChar(f2.genderBox.Text),
+                        f2.mailBox.Text,
+                        Convert.ToInt16(f2.postNumberBox.Text),
+                        Convert.ToInt16(pobjs[0].ToString()),
+                        Convert.ToInt16(pobjs[1].ToString()),
+                        f2.seekingBox.Text,
+                        f2.btImage
+                        );
+
+                    db.UpdatePerson(updatePerson);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Woaw there! You have more than 1 user selected. Please only select 1.", "HOLD UP!");
+            }
+
+            #region OldCode
+            /*
             foreach (Control c in f2.Controls)
             {
                 if (c.GetType() == typeof(TextBox) || c.GetType() == typeof(ComboBox))
@@ -276,7 +330,8 @@ namespace DateApp
             else
             {
                 // HANDLE DA LEVER KRONK!
-            }
+            }*/
+            #endregion
         }
 
         /// <summary>
@@ -426,7 +481,8 @@ namespace DateApp
         }
 
         /// <summary>
-        ///
+        /// Event handler for hoverover a listviewitem.
+        /// It will present the image if one is present.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -442,14 +498,25 @@ namespace DateApp
             
         }
 
+        /// <summary>
+        /// Event handler for selection changed to listvewitems.
+        /// Changes if specific button are available.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void listViewPerson_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            // Enable delete button
-            buttonDeleteUser.Enabled = true;
-
-            if (e.IsSelected == false)
+            if (e.IsSelected == true)
             {
+                // Enable the update and delete button.
+                buttonDeleteUser.Enabled = true;
+                buttonUpdate.Enabled = true;
+            }
+            else
+            {
+                // Disable the update and delete button.
                 buttonDeleteUser.Enabled = false;
+                buttonUpdate.Enabled = false;
             }
         }
 

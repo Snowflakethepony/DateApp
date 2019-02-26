@@ -15,14 +15,38 @@ namespace DateApp
 {
     public partial class UpdateForm : Form
     {
-        public bool updateCliced;
         public Person updatePerson;
         public byte[] btImage;
+        public bool updateClicked = false;
         private DataAccess db = new DataAccess();
 
         public UpdateForm()
         {
             InitializeComponent();
+        }
+
+        public void ShowForm(DateAppForm form)
+        {
+            // Instanziate the local varible
+            List<object> objs = new List<object>();
+
+            // Populate the profbox items
+            foreach (string i in form.profBox.Items)
+            {
+                Console.WriteLine(i);
+                objs.Add(i);
+            }
+            profBox.Items.AddRange(objs.ToArray());
+
+            // Clear the local varible and populate the statusbox items
+            objs.Clear();
+            foreach (string i in form.statusBox.Items)
+            {
+                objs.Add(i);
+            }
+            statusBox.Items.AddRange(objs.ToArray());
+
+            this.ShowDialog();
         }
 
         public void ButtonUpdate_Click(object sender, EventArgs e)
@@ -40,10 +64,11 @@ namespace DateApp
                 MessageBox.Show("Error loading Image", "Warning");
             }
 
-            updateCliced = true;
+            updateClicked = true;
             Close();
         }
 
+        /*
         private void UpdateForm_Load(object sender, EventArgs e)
         {
             object[] prof = db.GetValues("DateApp", "SELECT prof FROM profession");
@@ -63,6 +88,7 @@ namespace DateApp
                 statusBox.Items.Add(((object[])((IDictionary<string, object>)status[ps]).Values)[0].ToString());
                 ps++;
             }
-        }
+            
+        }*/
     }
 }

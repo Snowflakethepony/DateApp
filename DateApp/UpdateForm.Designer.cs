@@ -78,7 +78,7 @@
             this.statusBox.FormattingEnabled = true;
             this.statusBox.Location = new System.Drawing.Point(12, 321);
             this.statusBox.Name = "statusBox";
-            this.statusBox.Size = new System.Drawing.Size(99, 21);
+            this.statusBox.Size = new System.Drawing.Size(100, 21);
             this.statusBox.TabIndex = 36;
             // 
             // profBox
@@ -86,7 +86,7 @@
             this.profBox.FormattingEnabled = true;
             this.profBox.Location = new System.Drawing.Point(12, 242);
             this.profBox.Name = "profBox";
-            this.profBox.Size = new System.Drawing.Size(100, 21);
+            this.profBox.Size = new System.Drawing.Size(179, 21);
             this.profBox.TabIndex = 32;
             // 
             // postNumberBox
@@ -245,7 +245,6 @@
             this.Controls.Add(this.label1);
             this.Name = "UpdateForm";
             this.Text = "UpdateForm";
-            this.Load += new System.EventHandler(this.UpdateForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

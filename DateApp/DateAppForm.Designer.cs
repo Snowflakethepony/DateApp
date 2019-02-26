@@ -309,6 +309,7 @@
             // 
             // buttonUpdate
             // 
+            this.buttonUpdate.Enabled = false;
             this.buttonUpdate.Location = new System.Drawing.Point(794, 184);
             this.buttonUpdate.Name = "buttonUpdate";
             this.buttonUpdate.Size = new System.Drawing.Size(192, 23);
@@ -393,8 +394,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox mailBox;
         private System.Windows.Forms.TextBox postNumberBox;
-        private System.Windows.Forms.ComboBox profBox;
-        private System.Windows.Forms.ComboBox statusBox;
         private System.Windows.Forms.Button buttonImage;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.PictureBox profilePicture;
@@ -403,6 +402,8 @@
         private System.Windows.Forms.ComboBox seekingBox;
         private System.Windows.Forms.Button buttonUpdate;
         private System.Windows.Forms.Button buttonDeleteUser;
+        public System.Windows.Forms.ComboBox profBox;
+        public System.Windows.Forms.ComboBox statusBox;
     }
 }
 
