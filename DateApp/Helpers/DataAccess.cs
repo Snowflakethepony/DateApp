@@ -73,7 +73,7 @@ namespace DateApp.Helpers
             using (IDbConnection con = new SqlConnection(SqlHelper.ConVal("DateApp")))
             {
                 // Query for the information of the foreign keys needed.
-                object oprof = con.Query($"SELECT profession.prof FROM profession WHERE profID = '{ p.Profession }' ").FirstOrDefault();
+                object oprof = con.Query($"SELECT profession.prof FROM profession WHERE profID = '{ p.Prof }' ").FirstOrDefault();
                 object ocity = con.Query($"SELECT area.city FROM area WHERE postnumber = '{ p.Area }' ").FirstOrDefault();
                 object ostatus = con.Query($"SELECT status.status FROM status WHERE statusID = '{ p.Status }' ").FirstOrDefault();
 
@@ -127,13 +127,39 @@ namespace DateApp.Helpers
         /// Does not take in a query as this is a static query!.
         /// </summary>
         /// <param name="name"> Connectionstring. </param>
+        /// <param name="ID"> True = Search where ID. False = Search where gender. </param>
+        /// <param name="where"> Parameter used in SQL query. </param>
         /// <returns></returns>
-        public List<PersonSeeking> GetPersonSeeking(string name, string where = "")
+        public List<PersonSeeking> GetPersonSeeking(string name, string queryType, string where = "")
         {
+            List<PersonSeeking> persons = new List<PersonSeeking>();
             using (IDbConnection connection = new SqlConnection(SqlHelper.ConVal(name)))
             {
-                return connection.Query<PersonSeeking>($"EXEC personSeeking @Where={where}").ToList();
+                try
+                {
+                    switch (queryType)
+                    {
+                        case "ID":
+                            persons = connection.Query<PersonSeeking>($"EXEC personSeekingID @Where={where}").ToList();
+                            break;
+                        case "Gender":
+                            persons = connection.Query<PersonSeeking>($"EXEC personSeekingG @Where={where}").ToList();
+                            break;
+                        case "Name":
+                            persons = connection.Query<PersonSeeking>($"EXEC personSeekingN @Where={where}").ToList();
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
             }
+
+            return persons;
         }
 
         /// <summary>
@@ -212,15 +238,52 @@ namespace DateApp.Helpers
             }
         }
 
+        public bool DeletePerson(int personID)
+        {
+            bool result = true; // Default true as a check for not 1 is in place 
+            int executeResult;
+
+            using (IDbConnection db = new SqlConnection(SqlHelper.ConVal("DateApp")))
+            {
+                string deleteQuery = @"DELETE dbo.person WHERE person.personID = " + personID;
+
+                executeResult = db.Execute(deleteQuery);
+            };
+
+            // 1 = OK -- Anything else is a problem
+            if (executeResult != 1)
+            {
+                Console.WriteLine(executeResult);
+                result = false;
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Uses directly a person. No need for translation data.
         /// </summary>
         /// <param name="person"></param>
-        public void InsertPeple(Person person)
+        public void InsertPerson(Person person)
         {
             using (IDbConnection db = new SqlConnection(SqlHelper.ConVal("DateApp")))
             {
-                string insertQuery = @"INSERT INTO [dbo].[person]([firstName], [lastName], [birthday], [gender], [mail], [area], [profession], [status], [seeking], [picture]) VALUES (@firstName, @lastName, @birthday, @gender, @mail, @area, @profession, @status, @seeking, @picture)";
+                string insertQuery = @"INSERT INTO [dbo].[person]([firstName], [lastName], [birthday], [gender], [mail], [area], [profession], [status], [seeking], [picture]) VALUES (@firstName, @lastName, @birthday, @gender, @mail, @area, @prof, @status, @seeking, @picture)";
+
+                var result = db.Execute(insertQuery, person);
+            };
+        }
+
+        /// <summary>
+        /// Updates a person in the DB.
+        /// Uses Persons 2 constructor!
+        /// </summary>
+        /// <param name="person"> Person object. </param>
+        public void UpdatePerson(Person person)
+        {
+            using (IDbConnection db = new SqlConnection(SqlHelper.ConVal("DateApp")))
+            {
+                string insertQuery = @"UPDATE [dbo].[person] SET [firstName] = @firstName, [lastName] = @lastName, [birthday] = @birthday, [gender] = @gender, [mail] = @mail,  [area] = @area, [profession] = @prof, [status] = @status, [seeking] = @seeking, [picture] = @picture WHERE personID = @personID";
 
                 var result = db.Execute(insertQuery, person);
             };

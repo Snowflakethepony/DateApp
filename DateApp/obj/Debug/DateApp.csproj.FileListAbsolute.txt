@@ -24,3 +24,4 @@ C:\Dennis\DateApp\DateApp\obj\Debug\DateApp.csproj.CopyComplete
 C:\Dennis\DateApp\DateApp\obj\Debug\DateApp.exe
 C:\Dennis\DateApp\DateApp\obj\Debug\DateApp.pdb
 C:\Dennis\DateApp\DateApp\obj\Debug\DateApp.DateAppForm.resources
+C:\Dennis\DateApp\DateApp\obj\Debug\DateApp.UpdateForm.resources

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
 
 namespace DateApp
@@ -12,13 +13,12 @@ namespace DateApp
     {
         // Instansiate local variables.
         private List<Person> people = new List<Person>();
-
         private List<PersonSeeking> peopleSeeking = new List<PersonSeeking>();
 
         // Instansiate Helper classes.
         private DataAccess db = new DataAccess();
-
         private GUIHelper gh = new GUIHelper();
+        private UpdateForm f2 = new UpdateForm();
 
         // Open the app.
         public DateAppForm()
@@ -72,7 +72,7 @@ namespace DateApp
         /// <param name="e"> Event. </param>
         private void buttonInsert_Click(object sender, EventArgs e)
         {
-            Person person = new Person();
+            
             string[] controlNames = { profBox.Text, statusBox.Text };
 
             try
@@ -91,20 +91,36 @@ namespace DateApp
                     fStream.Read(btImage, 0, btImage.Length);
                     fStream.Close();
 
-                    person.Firstname = firstnameBox.Text;
+                    Person person = new Person(
+                        firstnameBox.Text,
+                        lastnameBox.Text,
+                        birthdayBox.Text,
+                        Convert.ToChar(genderBox.Text),
+                        mailBox.Text,
+                        Convert.ToInt16(postNumberBox.Text),
+                        Convert.ToInt16(pobjs[0].ToString()),
+                        Convert.ToInt16(pobjs[1].ToString()),
+                        seekingBox.Text,
+                        btImage
+
+                    );
+
+                    /*
+                    person.Firstname = firstnameBox.Text
                     person.Lastname = lastnameBox.Text;
                     person.Mail = mailBox.Text;
                     person.Gender = Convert.ToChar(genderBox.Text);
                     person.Birthday = birthdayBox.Text;
                     person.Profession = pobjs[0].ToString();
                     person.Area = Convert.ToInt16(postNumberBox.Text);
-                    person.Status = pobjs[1].ToString();
+                    person.Status = Convert.ToInt16(pobjs[1].ToString());
                     person.Seeking = seekingBox.Text;
                     person.Picture = btImage;
+                    */
 
                     // Call to insert person
                     //db.InsertPeople(values, file);
-                    db.InsertPeple(person);
+                    db.InsertPerson(person);
 
                     // Show picture chosen
                     profilePicture.Image = Image.FromFile(openFileDialog1.FileName);
@@ -163,10 +179,10 @@ namespace DateApp
                 "WHERE gender = 'M'");*/
 
             // Columns - EMpty for picture
-            string[] columns = { "Name:150", "City:100", "Mail:100", "Seeks:50", ":0" };
+            string[] columns = { "Name:150", "City:100", "Mail:100", "Seeks:50"};
 
             // Query database using stored procedure method.
-            peopleSeeking = db.GetPersonSeeking("DateApp", "M");
+            peopleSeeking = db.GetPersonSeeking("DateApp", "Gender", "M");
 
             // Call GUIHelper function to populate listview
             gh.ListPeopleView(listViewPerson, peopleSeeking, columns);
@@ -188,10 +204,10 @@ namespace DateApp
                 "WHERE gender = 'F'");*/
 
             // Columns - Empty for picture
-            string[] columns = { "Name:150", "City:100", "Mail:100", "Seeks:50", ":0" };
+            string[] columns = { "Name:150", "City:100", "Mail:100", "Seeks:50"};
 
             // Query database using stored procedure method.
-            peopleSeeking = db.GetPersonSeeking("DateApp", "F");
+            peopleSeeking = db.GetPersonSeeking("DateApp", "Gender", "F");
 
             // Call GUIHelper function to populate listview
             gh.ListPeopleView(listViewPerson, peopleSeeking, columns);
@@ -218,7 +234,54 @@ namespace DateApp
         }
 
         /// <summary>
-        ///
+        /// Handle to update a person in the DB.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonUpdate_Click(object sender, EventArgs e)
+        {
+            foreach (Control c in f2.Controls)
+            {
+                if (c.GetType() == typeof(TextBox) || c.GetType() == typeof(ComboBox))
+                {
+                    c.Text = "";
+                }
+            }
+
+            if (peopleSeeking.Count == 1)
+            {
+                f2.ShowDialog();
+                if (f2.updateCliced)
+                {
+                    string[] controlNames = { f2.profBox.Text, f2.statusBox.Text };
+                    List<object> pobjs = db.Translator2(controlNames);
+
+                    Person person = new Person(
+                        peopleSeeking[0].PersonID,
+                        f2.firstnameBox.Text,
+                        f2.lastnameBox.Text,
+                        f2.birthdayBox.Text,
+                        Convert.ToChar(f2.genderBox.Text),
+                        f2.mailBox.Text,
+                        Convert.ToInt16(f2.postNumberBox.Text),
+                        Convert.ToInt16(pobjs[0].ToString()),
+                        Convert.ToInt16(pobjs[1].ToString()),
+                        f2.seekingBox.Text,
+                        f2.btImage
+                        );
+
+                    db.UpdatePerson(person);
+                }
+            }
+            else
+            {
+                // HANDLE DA LEVER KRONK!
+            }
+        }
+
+        /// <summary>
+        /// Click handler for Query button. 
+        /// Has multiple query string into the databse based on the input given.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -229,51 +292,92 @@ namespace DateApp
             string[] columns = { "Name:150", "City:100", "Mail:100", "Seeks:50", ":0" };
 
             int testInput;
-
+            
             try
             {
-                testInput = Convert.ToInt32(box);
-            }
-            catch
-            {
-                testInput = -1;
-            }
-
-            if (box != "" && box != null)
-            {
-                // If contain "-" then birthday is provided.
-                if (box.Contains("-"))
+                try
                 {
-                    // Query by birthday
-                    peopleSeeking = db.GetPersonSeeking2("DateApp", $"SELECT * FROM person WHERE birthday like '{box}%'");
+                    testInput = Convert.ToInt32(box);
                 }
-                // If the test int is higher then -1 (correct id) then an id is provided.
-                else if (testInput >= 0)
+                catch
                 {
-                    // Query ID - And call display image.
-                    peopleSeeking = db.GetPersonSeeking2("DateApp", $"SELECT * FROM person WHERE personID = '{box}'");
+                    testInput = -1;
+                }
 
-                    // Instaziate a new person to extract profile picture.
-                    PersonSeeking person = peopleSeeking[0];
-
-                    // Only call show picture code if there is an image.
-                    if (person.Picture != null)
+                if (box != "" && box != null)
+                {
+                    // If contain "-" then birthday is provided.
+                    if (box.Contains("-"))
                     {
-                        // Call the function to show the profile picture.
-                        showProfilePicture(person.Picture);
+                        // Query by birthday
+                        peopleSeeking = db.GetPersonSeeking2("DateApp", $"SELECT * FROM person WHERE birthday like '{box}%'");
                     }
+                    // If the test int is higher then -1 (correct id) then an id is provided.
+                    else if (testInput >= 0)
+                    {
+                        // Query ID - And call display image.
+                        peopleSeeking = db.GetPersonSeeking("DateApp", "ID", box);
+
+                        // Instaziate a new person to extract profile picture.
+                        PersonSeeking person = peopleSeeking[0];
+
+                        // Only call show picture code if there is an image.
+                        if (person.Picture != null)
+                        {
+                            // Call the function to show the profile picture.
+                            showProfilePicture(person.Picture);
+                        }
+                    }
+                    // Name most be provided.
+                    else
+                    {
+                        box = box.Trim();
+                        peopleSeeking = db.GetPersonSeeking("DateApp", "Name", $"'{box}%'");
+                    }
+
+                    gh.ListPeopleView(listViewPerson, peopleSeeking, columns);
                 }
-                // Name most be provided.
                 else
                 {
-                    peopleSeeking = db.GetPersonSeeking2("DateApp", $"SELECT * FROM person WHERE person.firstName like '{box}%'");
+                    // Show message
                 }
-
-                gh.ListPeopleView(listViewPerson, peopleSeeking, columns);
             }
-            else
+            catch (Exception ex)
             {
-                // Show message
+                Console.WriteLine(ex.Message);
+            }
+
+            
+        }
+
+        /// <summary>
+        /// Click handler for Delete User button.
+        /// Will go through all selected items inside the listview and call methods to delete the users from the SQL database.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonDeleteUser_Click(object sender, EventArgs e)
+        {
+           /* Goes through all items in the listview and checks if one is checked. Then calls the DeletePerson.
+            foreach (ListViewItem item in listViewPerson.Items)
+            {
+                if (item.Selected == true)
+                {
+                    //db.DeletePerson(Convert.ToInt16(item.Text));
+                    Console.WriteLine(Convert.ToInt16(item.Text));
+                }
+            }
+            */
+
+            // Gets all the selected items Only
+            var items = listViewPerson.SelectedItems;
+
+            // Goes through the collection of items and calls DeletePerson for each one.
+            foreach (ListViewItem i in items)
+            {
+                bool result = db.DeletePerson(Convert.ToInt16(i.Text));
+                i.Remove();
+                Console.WriteLine(result);
             }
         }
 
@@ -328,13 +432,28 @@ namespace DateApp
         /// <param name="e"></param>
         private void itemShowPicture(object sender, ListViewItemMouseHoverEventArgs e)
         {
-            var test = e.Item.SubItems.GetEnumerator();
+            foreach (PersonSeeking person in peopleSeeking)
+            {
+                if (e.Item.SubItems[0].Text == Convert.ToString(person.PersonID))
+                {
+                    showProfilePicture(person.Picture);
+                }
+            }
+            
+        }
 
-            Console.WriteLine(test.Current);
-            test.MoveNext();
-            Console.WriteLine(test);
+        private void listViewPerson_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            // Enable delete button
+            buttonDeleteUser.Enabled = true;
+
+            if (e.IsSelected == false)
+            {
+                buttonDeleteUser.Enabled = false;
+            }
         }
 
         #endregion Internal
+
     }
 }

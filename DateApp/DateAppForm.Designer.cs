@@ -56,6 +56,8 @@
             this.buttonQuery = new System.Windows.Forms.Button();
             this.genderBox = new System.Windows.Forms.ComboBox();
             this.seekingBox = new System.Windows.Forms.ComboBox();
+            this.buttonUpdate = new System.Windows.Forms.Button();
+            this.buttonDeleteUser = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.profilePicture)).BeginInit();
             this.SuspendLayout();
             // 
@@ -189,6 +191,7 @@
             this.listViewPerson.UseCompatibleStateImageBehavior = false;
             this.listViewPerson.View = System.Windows.Forms.View.Details;
             this.listViewPerson.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.itemShowPicture);
+            this.listViewPerson.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listViewPerson_ItemSelectionChanged);
             // 
             // label8
             // 
@@ -304,11 +307,34 @@
             this.seekingBox.Size = new System.Drawing.Size(100, 21);
             this.seekingBox.TabIndex = 9;
             // 
+            // buttonUpdate
+            // 
+            this.buttonUpdate.Location = new System.Drawing.Point(794, 184);
+            this.buttonUpdate.Name = "buttonUpdate";
+            this.buttonUpdate.Size = new System.Drawing.Size(192, 23);
+            this.buttonUpdate.TabIndex = 33;
+            this.buttonUpdate.Text = "Update";
+            this.buttonUpdate.UseVisualStyleBackColor = true;
+            this.buttonUpdate.Click += new System.EventHandler(this.buttonUpdate_Click);
+            // 
+            // buttonDeleteUser
+            // 
+            this.buttonDeleteUser.Enabled = false;
+            this.buttonDeleteUser.Location = new System.Drawing.Point(794, 155);
+            this.buttonDeleteUser.Name = "buttonDeleteUser";
+            this.buttonDeleteUser.Size = new System.Drawing.Size(192, 23);
+            this.buttonDeleteUser.TabIndex = 34;
+            this.buttonDeleteUser.Text = "Delete User";
+            this.buttonDeleteUser.UseVisualStyleBackColor = true;
+            this.buttonDeleteUser.Click += new System.EventHandler(this.buttonDeleteUser_Click);
+            // 
             // DateAppForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1028, 450);
+            this.Controls.Add(this.buttonDeleteUser);
+            this.Controls.Add(this.buttonUpdate);
             this.Controls.Add(this.seekingBox);
             this.Controls.Add(this.genderBox);
             this.Controls.Add(this.buttonQuery);
@@ -375,6 +401,8 @@
         private System.Windows.Forms.Button buttonQuery;
         private System.Windows.Forms.ComboBox genderBox;
         private System.Windows.Forms.ComboBox seekingBox;
+        private System.Windows.Forms.Button buttonUpdate;
+        private System.Windows.Forms.Button buttonDeleteUser;
     }
 }
 

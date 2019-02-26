@@ -22,11 +22,15 @@ namespace DateApp.Helpers
             list.Clear();
             string[] t;
 
+
+            list.Columns.Add("ID", 40);
             foreach (string v in columns)
             {
                 t = v.Split(':');
                 list.Columns.Add(t[0], Convert.ToInt16(t[1]));
             }
+
+            list.Columns.Add("Picture", 50);
 
             // Goes though each of the person found and put them in the list as items.
             foreach (PersonSeeking p in person)
@@ -34,9 +38,10 @@ namespace DateApp.Helpers
                 // Instasiate a new ListViewItem.
                 ListViewItem item = new ListViewItem
                 {
-                    // Populate the item.
-                    Text = p.Firstname + " " + p.Lastname
+                    Text = Convert.ToString(p.PersonID)
                 };
+                // Add PersonID First always.
+                item.SubItems.Add(p.Firstname + " " + p.Lastname);
                 item.SubItems.Add(p.City);
                 item.SubItems.Add(p.Mail);
                 item.SubItems.Add(p.Seeking);
@@ -44,7 +49,7 @@ namespace DateApp.Helpers
                 {
                     if (p.Picture != null)
                     {
-                        item.SubItems.Add(p.Picture.ToString());
+                        item.SubItems.Add("Present");
                     }
                     else
                     {
@@ -54,6 +59,9 @@ namespace DateApp.Helpers
                 catch
                 {
                 }
+
+
+                
 
                 // Add the item to the ListView.
                 list.Items.Add(item);

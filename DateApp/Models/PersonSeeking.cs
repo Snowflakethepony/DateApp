@@ -6,6 +6,7 @@
     /// </summary>
     public class PersonSeeking
     {
+        public int PersonID { get; set; }
         public string Firstname { get; set; }
         public string Lastname { get; set; }
         public string Mail { get; set; }
